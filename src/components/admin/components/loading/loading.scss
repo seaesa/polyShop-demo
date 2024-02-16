@@ -1,0 +1,31 @@
+@use '../../../admin/scss/abstracts/variables' as *;
+
+.loading-product {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .1);
+}
+
+.loading-product__icon {
+  display: block;
+  font-size: 40px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  color: $orange;
+  animation: spinner .6s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}

@@ -1,0 +1,23 @@
+@use '../../../admin/scss/abstracts/variables' as *;
+
+.addIcons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  padding: 10px 12px;
+  border-radius: 50%;
+  background-color: $orange;
+  cursor: pointer;
+}
+
+.modal-content {
+  padding: 10px;
+}
+
+.addIconProduct {
+  font-size: 23px;
+  color: $mainBg;
+}
