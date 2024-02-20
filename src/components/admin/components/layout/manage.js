@@ -73,14 +73,24 @@ export default function Layout({ children, onStateChange }) {
         <Form.Control
           value={name}
           onChange={e => setName(e.target.value)}
-          className='mb-3' type="text" id="inputPassword5" placeholder='Name' />
+          className='mb-3' type="text" placeholder='Name' />
         <Form.Control
           value={price}
           onChange={e => setPrice(e.target.value)}
-          className='mb-3' type="number" id="inputPassword5" placeholder='Price' />
+          className='mb-3' type="number" placeholder='Price' />
+        <Form.Control
+          className='mb-3' type="text" placeholder='detail-price' />
+        <Form.Control
+          className='mb-3' type="text" placeholder='MPS' />
 
         {image.length > 0 && image.map((Images, index) => <Images index={index} onChange={handleSetImage} key={index} name={`image ${++index}`} />)}
         <button type="button" onClick={handleAddImage} className="btn btn-sm btn-primary w-25 align-self-end mb-2" data-mdb-ripple-init>Add Image</button>
+        <Form.Select aria-label="Default select example" className='mb-3'>
+          <option>Category</option>
+          <option value="vinaphone">Vinaphone</option>
+          <option value="mobifone">Mobifone</option>
+          <option value="viettel">Viettel</option>
+        </Form.Select>
         <Form.Control
           value={desc}
           onChange={e => setDesc(e.target.value)}
@@ -90,4 +100,4 @@ export default function Layout({ children, onStateChange }) {
       {loading && <Loading />}
     </>
   )
-}
+} 

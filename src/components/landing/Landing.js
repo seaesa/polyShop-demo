@@ -11,12 +11,10 @@ export default function Landing() {
   const [products, setProducts] = useState([])
   useEffect(() => {
     (async () => {
-      let array = [];
       const getQuery = query(collection(DB, "products"), orderBy("timestamp", "desc"), limit(6));
       const data = await getDocs(getQuery);
-      data.forEach(doc => array.push({ ...doc.data(), slug: doc.id }))
-      setProducts(array)
-    })()
+      setProducts(data.docs.map(doc => ({ ...doc.data(), slug: doc.id })))
+    })();
   }, [])
   return (
     <>

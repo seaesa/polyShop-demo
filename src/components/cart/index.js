@@ -1,13 +1,19 @@
+import { ThemeContext } from '../../App';
 import ProductCart from './productCart'
+import { useContext, useEffect } from 'react';
 export const Cart = () => {
+  const { product, setProduct } = useContext(ThemeContext)
+  useEffect(() => {
+    setProduct(JSON.parse(localStorage.getItem('cart')) || [])
+  }, [])
   return (
     <>
-      <section className="vh-100" style={{ backgroundColor: '#fdccbc' }}>
+      <section className="py-5 mt-5" style={{ backgroundColor: '#fdccbc' }}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col">
-              <p><span className="h2">Shopping Cart </span><span className="h4">(1 item in your cart)</span></p>
-              <ProductCart />
+              <p><span className="h2">Shopping Cart </span><span className="h4"> {product.length} item in your cart</span></p>
+              {product.length > 0 && product.map((product, index) => <ProductCart key={index} {...product} />)}
               <div className="card mb-5">
                 <div className="card-body p-4">
                   <div className="float-end">

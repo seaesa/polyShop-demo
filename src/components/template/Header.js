@@ -1,32 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext } from "react";
 import logo from '../../assets/image/logo.png'
+import { ThemeContext } from "../../App";
 export default function Header() {
-
-  const [openedDrawer, setOpenedDrawer] = useState(false)
-
-  const toggleDrawer = () => setOpenedDrawer(!openedDrawer);
-  const changeNav = (event) => {
-    if (openedDrawer) {
-      setOpenedDrawer(false)
-    }
-  }
-
+  const { product } = useContext(ThemeContext)
   return (
     <header className="">
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/" onClick={changeNav}>
+          <Link className="navbar-brand" to="/" >
             <div style={{ width: '100px' }}>
               <img className="mw-100" src={logo} alt="Logo Poly Shop" />
             </div>
           </Link>
-
-          <div className={"navbar-collapse offcanvas-collapse " + (openedDrawer ? 'open' : '')}>
+          <div className={"navbar-collapse offcanvas-collapse"}>
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
-                <Link to="/products" className="nav-link" replace onClick={changeNav}>
+                <Link to="/products" className="nav-link" replace >
                   Explore
                 </Link>
               </li>
@@ -34,7 +25,7 @@ export default function Header() {
             <Link to='/cart'>
               <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
                 <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-                <span className="ms-3 badge rounded-pill bg-dark">0</span>
+                <span className="ms-3 badge rounded-pill bg-dark">{product.length > 0 ? product.length : 0}</span>
               </button>
             </Link>
             <ul className="navbar-nav mb-2 mb-lg-0">
@@ -55,33 +46,23 @@ export default function Header() {
                   aria-labelledby="userDropdown"
                 >
                   <li>
-                    <Link to="/" className="dropdown-item" onClick={changeNav}>
+                    <Link to="/" className="dropdown-item" >
                       Login
                     </Link>
                   </li>
                   <li>
-                    <Link to="/" className="dropdown-item" onClick={changeNav}>
+                    <Link to="/" className="dropdown-item" >
                       Sign Up
                     </Link>
                   </li>
                   <li>
-                    <Link to="/admin" className="dropdown-item" onClick={changeNav}>
+                    <Link to="/admin" className="dropdown-item" >
                       Admin
                     </Link>
                   </li>
                 </ul>
               </li>
             </ul>
-          </div>
-
-          <div className="d-inline-block d-lg-none">
-            <button type="button" className="btn btn-outline-dark">
-              <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-              <span className="ms-3 badge rounded-pill bg-dark">0</span>
-            </button>
-            <button className="navbar-toggler p-0 border-0 ms-3" type="button" onClick={toggleDrawer}>
-              <span className="navbar-toggler-icon"></span>
-            </button>
           </div>
         </div>
       </nav>

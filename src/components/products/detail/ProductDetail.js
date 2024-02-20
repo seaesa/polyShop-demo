@@ -5,24 +5,29 @@ import ScrollToTopOnMount from "../../template/ScrollToTopOnMount";
 import ImageComponent from '../Image/image';
 
 import { doc, getDoc } from "firebase/firestore";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import database
 import DB from '../../../db/firebase'
+import { ThemeContext } from "../../../App";
+import { Loading } from "../../admin/components/loading/loading";
 const iconPath = "M18.571 7.221c0 0.201-0.145 0.391-0.29 0.536l-4.051 3.951 0.96 5.58c0.011 0.078 0.011 0.145 0.011 0.223 0 0.29-0.134 0.558-0.458 0.558-0.156 0-0.313-0.056-0.446-0.134l-5.011-2.634-5.011 2.634c-0.145 0.078-0.29 0.134-0.446 0.134-0.324 0-0.469-0.268-0.469-0.558 0-0.078 0.011-0.145 0.022-0.223l0.96-5.58-4.063-3.951c-0.134-0.145-0.279-0.335-0.279-0.536 0-0.335 0.346-0.469 0.625-0.513l5.603-0.815 2.511-5.078c0.1-0.212 0.29-0.458 0.547-0.458s0.446 0.246 0.547 0.458l2.511 5.078 5.603 0.815c0.268 0.045 0.625 0.179 0.625 0.513z";
 
-export default function ProductDetail() {
 
+export default function ProductDetail() {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
+  const [image, setImage] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const [image, setImage] = useState('')
+  const { addProduct, setAddProduct } = useContext(ThemeContext);
+
   useEffect(() => {
     (async () => {
       const docRef = doc(DB, "products", productId);
       const docSnap = await getDoc(docRef);
-      setProduct(prev => {
+      setProduct(() => {
         setImage(docSnap.data().images[0])
-        return docSnap.data()
+        return { ...docSnap.data(), id: docSnap.id }
       })
     })()
   }, [productId])
@@ -30,6 +35,23 @@ export default function ProductDetail() {
   const handleClickImage = (e) => {
     setImage(e.target.src)
   }
+  const handleAddProduct = () => {
+    setLoading(true)
+    const existingProduct = addProduct.find((item) => item.id === product.id);
+    if (existingProduct) {
+      setAddProduct(addProduct.map((item) => {
+        if (item.id === product.id) {
+          let quantity = item.types.quantity + 1
+          return { ...item, types: { quantity, totalPrice: item.price * quantity } };
+        }
+        return item;
+      }));
+    } else setAddProduct([...addProduct, { ...product, types: { quantity: 1, totalPrice: product.price } }]);
+    setLoading(false)
+  }
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(addProduct))
+  }, [addProduct])
   return (
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
@@ -65,7 +87,7 @@ export default function ProductDetail() {
             <div className="col-12 mb-4">
               <img
                 className="border rounded ratio ratio-1x1"
-                src={image || product.images && product.images[0]}
+                src={(image) || (product.images && product.images[0])}
                 alt="img"
               />
             </div>
@@ -79,7 +101,7 @@ export default function ProductDetail() {
 
             <div className="row g-3 mb-4">
               <div className="col">
-                <button className="btn btn-outline-dark py-2 w-100">
+                <button onClick={handleAddProduct} className="btn btn-outline-dark py-2 w-100">
                   Add to cart
                 </button>
               </div>
@@ -151,6 +173,7 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
+      {loading && <Loading />}
     </div>
   );
-} 
+}

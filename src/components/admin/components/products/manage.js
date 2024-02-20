@@ -56,7 +56,7 @@ export default function Manage() {
             <span >{item.timestamp.toDate().toDateString()}</span>
           </td>
           <td>
-            <button type="button" className="btn btn-link btn-sm btn-rounded" >
+            <button type="button" className="btn btn-link btn-sm btn-rounded" style={{ textDecoration: 'none' }}>
               Edit
             </button>
           </td>

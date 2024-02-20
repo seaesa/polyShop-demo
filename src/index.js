@@ -20,7 +20,6 @@ import "./assets/styles/bootstrap-custom.css";
 import "./assets/styles/index.css";
 
 library.add(fas, far, fab);
-
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
