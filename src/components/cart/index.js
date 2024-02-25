@@ -1,25 +1,22 @@
-import { ThemeContext } from '../../App';
-import ProductCart from './productCart'
-import { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import ProductCart from './productCart';
+import { selectCart } from '../../redux/cart/cartSlice'
 export const Cart = () => {
-  const { product, setProduct } = useContext(ThemeContext)
-  useEffect(() => {
-    setProduct(JSON.parse(localStorage.getItem('cart')) || [])
-  }, [])
+  const cart = useSelector(selectCart)
   return (
     <>
       <section className="py-5 mt-5" style={{ backgroundColor: '#fdccbc' }}>
         <div className="container h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col">
-              <p><span className="h2">Shopping Cart </span><span className="h4"> {product.length} item in your cart</span></p>
-              {product.length > 0 && product.map((product, index) => <ProductCart key={index} {...product} />)}
+              <p><span className="h2">Shopping Cart </span><span className="h4"> 0 item in your cart</span></p>
+              {cart.length > 0 && cart.map((product, index) => <ProductCart key={index} {...product} />)}
               <div className="card mb-5">
                 <div className="card-body p-4">
                   <div className="float-end">
                     <p className="mb-0 me-5 d-flex align-items-center">
                       <span className="small text-muted me-2">Order total:</span> <span
-                        className="lead fw-normal">$799</span>
+                        className="lead fw-normal">$0</span>
                     </p>
                   </div>
                 </div>

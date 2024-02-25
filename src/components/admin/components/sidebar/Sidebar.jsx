@@ -44,20 +44,18 @@ const Sidebar = () => {
             </Link>
           ))
         }
-        <div className="sidebar__menu__item">
-          <div className="sidebar__menu__item__icon">
-            <i className='bx bx-log-out'></i>
-          </div>
-          <a
-            href='/'
-            style={{ textDecoration: 'none', color: 'inherit' }}>
+        <a href='/' style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="sidebar__menu__item">
+            <div className="sidebar__menu__item__icon">
+              <i className='bx bx-log-out'></i>
+            </div>
             <div className="sidebar__menu__item__txt">
               Logout
             </div>
-          </a>
-        </div>
+          </div>
+        </a >
       </div>
-    </div>
+    </div >
   )
 }
 

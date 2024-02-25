@@ -13,7 +13,7 @@ import App from "./App";
 // adding bootstrap 
 
 import 'bootstrap/dist/css/bootstrap.css';
-import "bootstrap/dist/js/bootstrap.bundle";
+import "bootstrap/dist/js/bootstrap";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/bootstrap-custom.css";

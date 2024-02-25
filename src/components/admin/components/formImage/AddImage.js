@@ -4,7 +4,7 @@ import { InputGroup, Form } from "react-bootstrap";
 export default function FormImage({ name, onChange, index }) {
   const [names, setNames] = useState('');
   return (
-    <InputGroup size="sm" className="mb-3">
+    <InputGroup size="sm" className="mb-3" id="">
       <InputGroup.Text id="inputGroup-sizing-sm">{name}</InputGroup.Text>
       <Form.Control
         value={names}
@@ -14,7 +14,7 @@ export default function FormImage({ name, onChange, index }) {
         }}
         aria-label="Small"
         aria-describedby="inputGroup-sizing-sm"
-        required
+        id=""
       />
     </InputGroup>
   )

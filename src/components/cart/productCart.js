@@ -1,16 +1,26 @@
 import { MDBCheckbox } from 'mdb-react-ui-kit';
-import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
+import { useRef } from 'react';
+import { removeCart, updateCart, decrementQuantity, increaseQuantity } from '../../redux/cart/cartSlice';
+import { useDispatch } from 'react-redux';
+
 export default function ProductCart({ name, price, images, id, types }) {
 
-  const handleIncrease = () => {
+  const dispatch = useDispatch()
+  const handleRemoveProduct = e => {
+    dispatch(removeCart({ id }))
+  }
+  const handleCheckboxProduct = () => {
 
   }
   return (
-    < div className="card mb-4" >
+    < div className="card mb-4">
       <div className="card-body p-4">
         <div className="row align-items-center">
           <div className="col-1">
-            <MDBCheckbox />
+            <MDBCheckbox onClick={handleCheckboxProduct} />
           </div>
           <div className="col">
             <Link to={`/products/${id}`}>
@@ -29,12 +39,13 @@ export default function ProductCart({ name, price, images, id, types }) {
               <p className="small text-muted mb-3 pb-2">Quantity</p>
               <div className='d-flex align-items-center'>
                 <button
+                  onClick={e => dispatch(decrementQuantity({ id }))}
                   className="btn btn-primary btn-sm px-2 mx-3">
                   <i className="fas fa-minus"></i>
                 </button>
                 <p className="lead fw-normal mb-0">{types.quantity}</p>
                 <button
-                  onClick={handleIncrease}
+                  onClick={e => dispatch(increaseQuantity({ id }))}
                   className="btn btn-primary btn-sm px-2 mx-3">
                   <i className="fas fa-plus"></i>
                 </button>
@@ -55,9 +66,11 @@ export default function ProductCart({ name, price, images, id, types }) {
             </div>
           </div>
           <div className="col d-flex justify-content-center">
-            <a href="!" className="text-danger">
-              <i className="fas fa-trash fa-lg"></i>
-            </a>
+            <Button
+              onClick={handleRemoveProduct}
+              variant="info" className="text-danger">
+              <i style={{ color: '#fff' }} className="fas fa-trash fa-lg"></i>
+            </Button>
           </div>
         </div>
 

@@ -1,37 +1,28 @@
-import Template from "./components/template/Template";
-import ProductDetail from "./components/products/detail/ProductDetail";
 import { Route, Routes } from "react-router-dom";
-import Landing from "./components/landing/Landing";
-import ProductList from "./components/products/ProductList";
-import Admin from "./components/admin";
-import Blank from "./components/admin/pages/Blank";
-import Products from './components/admin/components/products';
-import Dashboard from './components/admin/pages/Dashboard';
-import { Cart } from "./components/cart";
-import { createContext, useState } from "react";
-
-export const ThemeContext = createContext();
-
+// redux
+import store from './redux/store';
+import { Provider } from 'react-redux';
+// components
+import DefaultTemplate from "./components/template/Template";
+import { RouteElement } from './routes/routes';
 export default function App() {
-  const [addProduct, setAddProduct] = useState([])
-  const [product, setProduct] = useState([])
-
   return (
-    <ThemeContext.Provider value={{ addProduct, setAddProduct, product, setProduct }}>
+    <Provider store={store}>
       <Routes>
-        <Route path="/products" element={<Template><ProductList /></Template>} />
-        <Route path="/cart" element={<Template><Cart /></Template>} />
-        <Route path="/products/:productId" element={<Template><ProductDetail /></Template>} />
-        <Route path="/admin" element={<Admin />} >
-          <Route index element={<Dashboard />} />
-          <Route path="orders" element={<Blank />} />
-          <Route path="products" element={<Products />} />
-          <Route path="customers" element={<Blank />} />
-          <Route path="settings" element={<Blank />} />
-          <Route path="stats" element={<Blank />} />
-        </Route>
-        <Route path="/" element={<Template><Landing /></Template>} />
+        {RouteElement.map((route, index) => {
+          const Template = route.template ?? DefaultTemplate;
+          const Element = route.element
+          return (
+            <Route key={index} path={route.rootPath} element={<Template><Element /></Template>} >
+              {Array.isArray(route.childrenPath) && route.childrenPath.map((children, index) => {
+                const Element = children.element
+                return <Route key={index} path={children.path} element={<Template><Element /></Template>} />
+              })
+              }
+            </Route>
+          )
+        })}
       </Routes>
-    </ThemeContext.Provider>
+    </Provider>
   );
 }

@@ -1,10 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import logo from '../../assets/image/logo.png'
-import { ThemeContext } from "../../App";
+import logo from '../../assets/image/logo.png';
+import { useSelector } from 'react-redux';
+import { selectCart } from './../../redux/cart/cartSlice'
 export default function Header() {
-  const { product } = useContext(ThemeContext)
+  const cartQuantity = useSelector(selectCart)
   return (
     <header className="">
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
@@ -25,26 +25,19 @@ export default function Header() {
             <Link to='/cart'>
               <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
                 <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-                <span className="ms-3 badge rounded-pill bg-dark">{product.length > 0 ? product.length : 0}</span>
+                <span className="ms-3 badge rounded-pill bg-dark">{cartQuantity.length}</span>
               </button>
             </Link>
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item dropdown">
-                <a
-                  href="!#"
-                  className="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  id="userDropdown"
+                <a href="!#" className="nav-link dropdown-toggle" data-toggle="dropdown" id="userDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
                   <FontAwesomeIcon icon={["fas", "user-alt"]} />
                 </a>
-                <ul
-                  className="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="userDropdown"
-                >
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" >
                   <li>
                     <Link to="/" className="dropdown-item" >
                       Login
