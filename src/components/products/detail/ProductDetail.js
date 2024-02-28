@@ -84,7 +84,7 @@ export default function ProductDetail() {
         <div className="col-lg-5">
           <div className="d-flex flex-column h-100">
             <h2 className="mb-1">{product.name}</h2>
-            <h4 className="text-muted mb-4">{product.price}</h4>
+            <h4 className="text-muted mb-4">{product.price}k</h4>
 
             <div className="row g-3 mb-4">
               <div className="col">
@@ -100,21 +100,11 @@ export default function ProductDetail() {
             <h4 className="mb-0">Details</h4>
             <hr />
             <dl className="row">
-              <dt className="col-sm-4">Code</dt>
-              <dd className="col-sm-8 mb-3">C0001</dd>
+              <dt className="col-sm-4">price detail</dt>
+              <dd className="col-sm-8 mb-3">{product.detailPrice}</dd>
 
-              <dt className="col-sm-4">Category</dt>
-              <dd className="col-sm-8 mb-3">Cases & Covers</dd>
-
-              <dt className="col-sm-4">Brand</dt>
-              <dd className="col-sm-8 mb-3">iPhone X</dd>
-
-              <dt className="col-sm-4">Manufacturer</dt>
-              <dd className="col-sm-8 mb-3">Nillkin</dd>
-
-              <dt className="col-sm-4">Status</dt>
-              <dd className="col-sm-8 mb-3">Instock</dd>
-
+              <dt className="col-sm-4">MPS</dt>
+              <dd className="col-sm-8 mb-3">{product.MPS}</dd>
               <dt className="col-sm-4">Rating</dt>
               <dd className="col-sm-8 mb-3">
                 <Ratings

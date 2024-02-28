@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProduct, removeProduct, getProduct } from './thunkApi';
+import { addProduct, removeProduct, getProduct, updateProduct } from './thunkApi';
 export const firebaseSlice = createSlice({
   name: 'firebase',
   initialState: {
@@ -34,6 +34,18 @@ export const firebaseSlice = createSlice({
     });
     builder.addCase(removeProduct.fulfilled, (state, action) => {
       state.doc = state.doc.filter(doc => doc.id !== action.payload);
+      state.isLoading = false;
+    });
+    // update product
+    builder.addCase(updateProduct.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateProduct.fulfilled, (state, action) => {
+      state.doc = state.doc.map(doc => {
+        if (doc.id === action.payload.id) {
+          return { ...doc, ...action.payload }
+        } else return doc
+      });
       state.isLoading = false;
     });
   }

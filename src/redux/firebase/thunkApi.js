@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import DB from '../../db/firebase';
-import { Timestamp, addDoc, collection, deleteDoc, doc, getDoc, getDocs } from "firebase/firestore";
+import { Timestamp, addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, serverTimestamp } from "firebase/firestore";
 
 export const getProduct = createAsyncThunk(
   'product/getproduct',
@@ -36,6 +36,6 @@ export const removeProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   'product/updateproduct',
   async data => {
-    await updateDoc(doc(DB, "products", id), { ...data });
+    await updateDoc(doc(DB, "products", data.id), { ...data, timestamp: serverTimestamp() });
     return data
   })

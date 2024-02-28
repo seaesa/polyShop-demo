@@ -1,34 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormImage from '../formImage/UpdateImage';
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../../../../redux/firebase/thunkApi";
+import { updateProduct } from "../../../../redux/firebase/thunkApi";
+import { doc, getDoc } from "firebase/firestore";
+import DB from "../../../../db/firebase";
 
 export default function ModalProduct({ setShow, show, item }) {
-  const [image, setImage] = useState(item.images);
   const dispatch = useDispatch()
+  const [value, setValue] = useState(item.images);
   // handle form submit
   const [name, setName] = useState(item.name);
   const [price, setPrice] = useState(item.price);
   const [desc, setDesc] = useState(item.description);
-  const [images, setImages] = useState([]);
   const [detailPrice, setDetailPrice] = useState(item.detailPrice)
   const [mps, setMps] = useState(item.MPS)
   const [category, setCategory] = useState('')
+  useEffect(() => {
+    (async () => {
+      const docRef = doc(DB, "products", item.id);
+      const currentDoc = await getDoc(docRef);
+      const main = await getDoc(currentDoc.data()?.typeRef);
+      setCategory(main.data()?.name)
+    })();
+  }, [item.id])
   // await loading
   const handleClose = () => setShow(false);
-  const handleAddImage = () => {
-    setImage(prev => [...prev, FormImage])
-  }
-  const handleSetImage = (e, index) => {
-    setImages(prev => {
-      prev[index] = e.target.value
-      return prev
-    })
-  }
   const handleSubmitUpdateProduct = () => {
-    setShow(false)
-
+    setShow(false);
+    dispatch(updateProduct({ name, price, description: desc, detailPrice, MPS: mps, typeRef: doc(DB, 'categories', category), images: value, id: item.id }))
   }
   return (
     <Modal show={show} onHide={handleClose} className='px-3'>
@@ -52,8 +52,8 @@ export default function ModalProduct({ setShow, show, item }) {
         value={mps}
         onChange={e => setMps(e.target.value)}
         className='mb-3' type="number" placeholder='Mpbs' />
-      {image.length > 0 && image.map((Images, index) => <Images index={index} onChange={handleSetImage} key={index} name={`image ${++index}`} />)}
-      <button name="" type="button" onClick={handleAddImage} className="btn btn-sm btn-primary w-25 align-self-end mb-2" data-mdb-ripple-init>Add Image</button>
+      {Array.isArray(value) && value.map((url, index) => <FormImage index={index} key={index} name={`image ${++index}`} value={url} setValue={setValue} />)}
+      <button name="" type="button" onClick={e => setValue(prev => [...prev, ''])} className="btn btn-sm btn-primary w-25 align-self-end mb-2" data-mdb-ripple-init>Add Image</button>
       <Form.Select
         name="category"
         value={category}

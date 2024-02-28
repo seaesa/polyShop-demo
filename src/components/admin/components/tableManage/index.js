@@ -30,7 +30,7 @@ export default function Table({ item }) {
         <td>
           <button
             onClick={e => setShow(true)}
-            type="button" className="btn btn-link btn-sm btn-rounded" style={{ textDecoration: 'none' }}>
+            type="button" className="btn btn-link btn-rounded" style={{ textDecoration: 'none' }}>
             Edit
           </button>
         </td>
@@ -38,7 +38,7 @@ export default function Table({ item }) {
           <button onClick={e => dispatch(removeProduct(item.id))} type="button" className="btn-close" aria-label="Close"></button>
         </td>
       </tr>
-      <UpdateProduct setShow={setShow} show={show} item={item} />
+      {show && <UpdateProduct setShow={setShow} show={show} item={item} value={1} />}
     </>
   )
 }

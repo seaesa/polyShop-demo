@@ -1,0 +1,14 @@
+.animation {
+  animation: identifier .5s ease-in-out;
+  transition: all .5s linear;
+}
+
+@keyframes identifier {
+  from {
+    transform: translateX(-70%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}

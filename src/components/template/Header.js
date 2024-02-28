@@ -4,7 +4,7 @@ import logo from '../../assets/image/logo.png';
 import { useSelector } from 'react-redux';
 import { selectCart } from './../../redux/cart/cartSlice'
 export default function Header() {
-  const cartQuantity = useSelector(selectCart)
+  const { cart } = useSelector(selectCart)
   return (
     <header className="">
       <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-white border-bottom">
@@ -25,7 +25,7 @@ export default function Header() {
             <Link to='/cart'>
               <button type="button" className="btn btn-outline-dark me-3 d-none d-lg-inline">
                 <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-                <span className="ms-3 badge rounded-pill bg-dark">{cartQuantity.length}</span>
+                <span className="ms-3 badge rounded-pill bg-dark">{cart.length}</span>
               </button>
             </Link>
             <ul className="navbar-nav mb-2 mb-lg-0">
@@ -39,18 +39,13 @@ export default function Header() {
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown" >
                   <li>
-                    <Link to="/" className="dropdown-item" >
-                      Login
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" className="dropdown-item" >
-                      Sign Up
-                    </Link>
-                  </li>
-                  <li>
                     <Link to="/admin" className="dropdown-item" >
                       Admin
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/history" className="dropdown-item" >
+                      History order in device
                     </Link>
                   </li>
                 </ul>

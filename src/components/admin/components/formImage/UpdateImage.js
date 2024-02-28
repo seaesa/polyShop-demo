@@ -1,20 +1,21 @@
-import { useState } from "react";
 import { InputGroup, Form } from "react-bootstrap";
 
-export default function FormImage({ name, onChange, index }) {
-  const [names, setNames] = useState('');
+export default function FormImage({ name, index, setValue, value }) {
   return (
-    <InputGroup size="sm" className="mb-3" id="">
+    <InputGroup size="sm" className="mb-3" name='imagegroup'>
       <InputGroup.Text id="inputGroup-sizing-sm">{name}</InputGroup.Text>
       <Form.Control
-        value={names}
+        value={value}
         onChange={e => {
-          setNames(e.target.value);
-          onChange(e, index)
+          setValue(prev => {
+            let currentValue = [...prev]
+            currentValue[index] = e.target.value;
+            return currentValue
+          });
         }}
         aria-label="Small"
         aria-describedby="inputGroup-sizing-sm"
-        id=""
+        name='image'
       />
     </InputGroup>
   )

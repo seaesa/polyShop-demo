@@ -25,7 +25,7 @@ export default function Product() {
       <div className='addIcons' onClick={e => setShow(true)} >
         <FontAwesomeIcon className='addIconProduct' icon={faPlus} />
       </div>
-      <ModalAddProduct setShow={setShow} show={show} />
+      {show && <ModalAddProduct setShow={setShow} show={show} />}
       {isLoading && <Loading />}
     </>
   )
