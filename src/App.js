@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 // components
 import DefaultTemplate from "./components/template/Template";
 import { RouteElement } from './routes/routes';
+
 export default function App() {
   return (
     <Provider store={store}>
