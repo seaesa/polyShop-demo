@@ -6,6 +6,8 @@ import ScrollToTopOnMount from "../template/ScrollToTopOnMount";
 import DB from '../../db/firebase'
 // interact firebase
 import { collection, getDocs } from "firebase/firestore";
+import { useDispatch } from 'react-redux';
+import { addCart } from '../../redux/cart/cartSlice';
 
 const categories = [
   "All Products",
@@ -100,6 +102,7 @@ function FilterMenuLeft() {
 
 function ProductList() {
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch()
   useEffect(() => {
     (async () => {
       let array = [];
@@ -110,9 +113,6 @@ function ProductList() {
       setProducts(array)
     })()
   }, [])
-  const handleAddToCart = () => {
-
-  }
   return (
     <div className="container mt-5 py-4 px-xl-5">
       <ScrollToTopOnMount />
@@ -224,9 +224,8 @@ function ProductList() {
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 row-cols-xl-3" >
               {
                 products.length > 0 && products.map((product, i) => {
-                  return <Product {...product} onClick={handleAddToCart} key={i} percentOff={i % 2 === 0 ? 15 : null} />
+                  return <Product {...product} key={i} percentOff={i % 2 === 0 ? 15 : null} />
                 })
-
               }
             </div>
             <div className="d-flex align-items-center mt-auto">

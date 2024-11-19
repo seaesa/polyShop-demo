@@ -7,7 +7,7 @@ import { Cart } from "../components/cart";
 import Landing from "../components/landing/Landing";
 import ProductList from "../components/products/ProductList";
 import ProductDetail from "../components/products/detail/ProductDetail";
-import Admin from "./../components/admin";
+import Admin from "../components/admin";
 export const RouteElement = [
   {
     rootPath: '/',

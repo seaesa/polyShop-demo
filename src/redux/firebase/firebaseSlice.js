@@ -42,6 +42,7 @@ export const firebaseSlice = createSlice({
     });
     builder.addCase(updateProduct.fulfilled, (state, action) => {
       state.doc = state.doc.map(doc => {
+        console.log(action.payload)
         if (doc.id === action.payload.id) {
           return { ...doc, ...action.payload }
         } else return doc

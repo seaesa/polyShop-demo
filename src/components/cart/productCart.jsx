@@ -1,24 +1,25 @@
 import { MDBCard, MDBCardBody, MDBCardImage, MDBIcon, MDBTypography, MDBCheckbox } from "mdb-react-ui-kit";
 
-import { removeCart, decrementQuantity, increaseQuantity, updateTotalCart } from '../../redux/cart/cartSlice';
+import { removeCart, decrementQuantity, increaseQuantity, updateTotalCart, updateCart } from '../../redux/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
-export default function ProductCart({ name, price, images, id, types, detailPrice, email, phone, setItemCheck, ...value }) {
+export default function ProductCart({ name, price, images, id, types, detailPrice, checked }) {
   const dispatch = useDispatch();
-
   const handleRemoveProduct = e => {
     e.preventDefault()
     dispatch(removeCart({ id }))
   }
   const handleCheckboxProduct = e => {
-    if (e.target.checked) {
-      setItemCheck(prev => [...prev, { name, price, images, id, types, detailPrice, ...value, userBuyed: { email, phone } }]);
-      dispatch(updateTotalCart({ types, interator: '+' }));
-    } else {
-      setItemCheck(item => item.filter(item => item.id !== id));
-      dispatch(updateTotalCart({ types, interator: '-' }));
-    }
+    dispatch(updateCart({ id, checked: e.target.checked }))
+    dispatch(updateTotalCart({ types, checked: e.target.checked }));
+    // if (e.target.checked) {
+    //   setItemCheck(prev => [...prev, { name, price, images, id, types, detailPrice, ...value, userBuyed: { email, phone } }]);
+    //   dispatch(updateTotalCart({ types, interator: '+' }));
+    // } else {
+    //   setItemCheck(item => item.filter(item => item.id !== id));
+    //   dispatch(updateTotalCart({ types, interator: '-' }));
+    // }
   }
   return (
     <MDBCard className="mb-3">
@@ -26,6 +27,7 @@ export default function ProductCart({ name, price, images, id, types, detailPric
         <div className="d-flex justify-content-between">
           <div className="d-flex flex-row align-items-center" style={{ flex: '1' }}>
             <MDBCheckbox
+              defaultChecked={checked}
               onClick={handleCheckboxProduct}
               style={{ marginRight: '10px', backgroundImage: 'inherit' }} />
             <Link to={`/products/${id}`} style={{ textDecoration: 'none' }}>

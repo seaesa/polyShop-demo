@@ -18,7 +18,7 @@ export default function Header() {
             <ul className="navbar-nav me-auto mb-lg-0">
               <li className="nav-item">
                 <Link to="/products" className="nav-link" replace >
-                  Explore
+                  Khám phá
                 </Link>
               </li>
             </ul>
@@ -45,7 +45,7 @@ export default function Header() {
                   </li>
                   <li>
                     <Link to="/history" className="dropdown-item" >
-                      History order in device
+                      History
                     </Link>
                   </li>
                 </ul>

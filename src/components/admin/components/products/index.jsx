@@ -12,8 +12,6 @@ export default function Product() {
   const dispatch = useDispatch()
   const { doc, isLoading } = useSelector(selectDocFirebase);
   const [show, setShow] = useState(false);
-
-
   useEffect(() => {
     dispatch(getProduct())
   }, [dispatch])

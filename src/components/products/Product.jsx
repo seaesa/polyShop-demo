@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from 'react-redux';
+import { addCart } from '../../redux/cart/cartSlice';
 
-export default function Product({ onClick, name, images, id, ...props }) {
+export default function Product({ name, images, id, ...props }) {
+  const disptach = useDispatch()
   const price = 10000;
   let percentOff;
   let offPrice = `${price}Ks`;
@@ -22,7 +25,9 @@ export default function Product({ onClick, name, images, id, ...props }) {
       </>
     );
   }
-
+  const handleAddcart = () => {
+    disptach(addCart({ name, images, id, ...props }))
+  }
   return (
     <div className="col">
       <div className="card shadow-sm">
@@ -41,7 +46,7 @@ export default function Product({ onClick, name, images, id, ...props }) {
           </h5>
           <p className="card-text text-center text-muted mb-0">{offPrice}</p>
           <div className="d-grid d-block">
-            <button onClick={onClick} className="btn btn-outline-dark mt-3">
+            <button onClick={handleAddcart} className="btn btn-outline-dark mt-3">
               <FontAwesomeIcon icon={["fas", "cart-plus"]} /> Add to cart
             </button>
           </div>

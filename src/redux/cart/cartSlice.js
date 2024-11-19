@@ -3,7 +3,10 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     cart: JSON.parse((sessionStorage.getItem('cart'))) || [],
-    totalCart: 0,
+    totalCart: JSON.parse(sessionStorage.getItem('cart'))?.reduce((previousValue, currentValue) => {
+      if (currentValue.checked) return previousValue + currentValue.price
+      else return previousValue
+    }, 0) || 0,
     isChecked: false,
     buyed: JSON.parse(localStorage.getItem('buyed')) || [],
     isLoading: false
@@ -20,7 +23,12 @@ export const cartSlice = createSlice({
           }
           return item;
         });
-      } else state.cart.push({ ...product, types: { quantity: 1, totalPrice: product.price } });
+      } else state.cart.push({ ...product, checked: false, types: { quantity: 1, totalPrice: product.price } });
+      sessionStorage.setItem('cart', JSON.stringify(state.cart))
+    },
+    updateCart(state, action) {
+      const { id, ...product } = action.payload
+      state.cart = state.cart.map(cart => cart.id === id ? { ...cart, ...product } : cart)
       sessionStorage.setItem('cart', JSON.stringify(state.cart))
     },
     removeCart(state, action) {
@@ -32,12 +40,12 @@ export const cartSlice = createSlice({
       sessionStorage.setItem('cart', JSON.stringify(state.cart));
     },
     updateTotalCart: (state, action) => {
-      if (action.payload.interator === '+') {
-        state.totalCart += +action.payload.types.totalPrice;
+      const product = action.payload
+      if (product.checked) {
+        state.totalCart += +product.types.totalPrice;
         state.isChecked = true;
-      }
-      else if (action.payload.interator === '-') {
-        state.totalCart -= +action.payload.types.totalPrice;
+      } else {
+        state.totalCart -= +product.types.totalPrice;
         state.isChecked = false;
       }
     },
@@ -67,6 +75,6 @@ export const cartSlice = createSlice({
     }
   }
 })
-export const { addCart, removeCart, updateTotalCart, decrementQuantity, increaseQuantity, historyBuyed } = cartSlice.actions;
+export const { addCart, removeCart, updateCart, updateTotalCart, decrementQuantity, increaseQuantity, historyBuyed } = cartSlice.actions;
 export const selectCart = (state) => state.cart
 export default cartSlice.reducer 

@@ -15,17 +15,15 @@ export const getProduct = createAsyncThunk(
 export const addProduct = createAsyncThunk(
   'product/addproduct',
   async data => {
-    const { name, price, category, detailPrice, mps, images, desc } = data;
-    if (name && price && category && detailPrice && mps) {
-      const refDoc = await addDoc(collection(DB, "products"), {
-        name, price, images, detailPrice,
-        description: desc, MPS: mps,
-        typeRef: doc(DB, 'categories', category),
-        timestamp: Timestamp.fromDate(new Date())
-      });
-      const currentDoc = await getDoc(refDoc);
-      return { ...currentDoc.data(), id: currentDoc.id }
-    } else alert('feild is not value')
+    const { name, price, category, detailPrice, mpbs, images, description } = data;
+    const refDoc = await addDoc(collection(DB, "products"), {
+      name, price: (+price), images, detailPrice,
+      description, MPS: mpbs,
+      typeRef: doc(DB, 'categories', category),
+      timestamp: Timestamp.fromDate(new Date())
+    });
+    const currentDoc = await getDoc(refDoc);
+    return { ...currentDoc.data(), id: currentDoc.id }
   })
 export const removeProduct = createAsyncThunk(
   'product/removeproduct',
@@ -36,6 +34,11 @@ export const removeProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   'product/updateproduct',
   async data => {
-    await updateDoc(doc(DB, "products", data.id), { ...data, timestamp: serverTimestamp() });
-    return data
+    const { id, mpbs, category, ...props } = data
+    await updateDoc(doc(DB, "products", id), { MPS: mpbs, typeRef: doc(DB, 'categories', category), timestamp: serverTimestamp(), ...props });
+    // return data
+    return {
+      id,
+      MPS: mpbs, typeRef: doc(DB, 'categories', category), timestamp: serverTimestamp(), ...props
+    }
   })

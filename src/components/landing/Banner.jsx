@@ -17,7 +17,7 @@ function BannerImage(props) {
       data-bs-interval="5000" >
       <div
         className="ratio"
-        style={{ "--bs-aspect-ratio": "50%", maxHeight: "460px" }} >
+        style={{ "--bs-aspect-ratio": "50%", maxHeight: "460px", height: '460px' }} >
         <img
           className="d-block w-100 h-100 bg-dark cover"
           alt=""
@@ -25,8 +25,8 @@ function BannerImage(props) {
         />
       </div>
       <div className="carousel-caption d-none d-lg-block">
-        <h5>Banner Header</h5>
-        <p>Some representative placeholder content for the banner.</p>
+        <h5>Mạng xài thả ga</h5>
+        <p>đến với chúng tôi. Ngoài chất lượng cuộc gọi hoàn hảo, bạn sẽ hoàn toàn kiểm soát chi phí kết nối phát sinh.</p>
       </div>
     </div>
   );
@@ -46,9 +46,9 @@ function Banner() {
         <BannerIncidator index="2" />
       </div>
       <div className="carousel-inner">
-        <BannerImage image='https://images.pexels.com/photos/33545/sunrise-phu-quoc-island-ocean.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' active={true} />
-        <BannerImage image='https://images.pexels.com/photos/58597/pexels-photo-58597.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
-        <BannerImage image='https://images.pexels.com/photos/1004122/pexels-photo-1004122.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' />
+        <BannerImage image='https://viettel-internet.com/img_data/images/285126593615_banner-vt2.png' active={true} />
+        <BannerImage image='https://banhangvnpt.vn/Uploads/images/2023/DT90%20Vinaphone.jpg' />
+        <BannerImage image='https://viettelinternet.vn/wp-content/uploads/2021/09/st10k-1.jpg' />
       </div>
     </div>
   );

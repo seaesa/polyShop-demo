@@ -5,30 +5,23 @@ import { Link } from 'react-router-dom';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCol, MDBContainer, MDBIcon, MDBInput, MDBRow, MDBTypography, } from "mdb-react-ui-kit";
 import { useState } from "react";
 import NoCart from './nocart';
-import { historyBuyed } from '../../redux/cart/cartSlice';
 import { Loading } from '../admin/components/loading/loading'
-import Toast from '../Toast';
+import toast, { Toaster } from 'react-hot-toast';
+
+const notify = () => toast.success('Buyed Successfully');
 export const Cart = () => {
-  const dispatch = useDispatch();
   const { cart, totalCart } = useSelector(selectCart);
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [itemCheck, setItemCheck] = useState([]);
+  const [phone, setPhone] = useState('0779526424');
+  const [email, setEmail] = useState('hairipi100@gmail.com');
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
   const handleBuyProduct = () => {
     if (phone && email && totalCart) {
       setIsLoading(true)
-      dispatch(historyBuyed(itemCheck));
+      // dispatch(historyBuyed(itemCheck));
       setTimeout(() => {
         setIsLoading(false)
-        setTimeout(() => {
-          setIsSuccess(true)
-          setTimeout(() => {
-            setIsSuccess(false)
-          }, 3000)
-        }, 1000)
-      }, 1000);
+        notify()
+      }, 2000);
     } else alert('write your phone and email or not choice product');
   }
   return (
@@ -49,7 +42,7 @@ export const Cart = () => {
                       </MDBTypography>
                       <hr />
                       {cart.length > 0 && cart.map((product, index) => {
-                        return <ProductCart key={index} {...product} email={email} phone={phone} setItemCheck={setItemCheck} />
+                        return <ProductCart key={index} {...product} email={email} phone={phone} />
                       })}
                     </MDBCol>
                     <MDBCol lg="5">
@@ -128,7 +121,7 @@ export const Cart = () => {
         : <NoCart />
       }
       {isLoading && <Loading />}
-      {isSuccess && <Toast />}
+      <Toaster />
     </>
   )
 }
