@@ -16,8 +16,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap/dist/js/bootstrap";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/bootstrap-custom.css";
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "./assets/styles/index.css";
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 library.add(fas, far, fab);
 const root = createRoot(document.getElementById("root"));

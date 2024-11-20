@@ -1,6 +1,8 @@
+import logo from '../assets/images/logo.svg'
+import avt from '../assets/images/avt.jpg'
 const images = {
-  logo: require('../assets/images/logo.svg').default,
-  avt: require('../assets/images/avt.jpg')
+  logo: logo,
+  avt: avt
 }
 
 export default images

@@ -5,14 +5,6 @@ import { Provider } from 'react-redux';
 // components
 import DefaultTemplate from "./components/template/Template";
 import { RouteElement } from './routes/routes';
-
-// fetch('https://sandbox.vnpayment.vn/qrpayauth/api/merchant/get_bank_list', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/x-www-form-urlencoded',
-//   },
-//   body: `tmn_code=LXTERUI2`
-// }).then(data => data.json()).then(data => console.log(data))  
 export default function App() {
   return (
     <Provider store={store}>

@@ -1,10 +1,10 @@
 import { MDBCard, MDBCardBody, MDBCardImage, MDBIcon, MDBTypography, MDBCheckbox } from "mdb-react-ui-kit";
-
 import { removeCart, decrementQuantity, increaseQuantity, updateTotalCart, updateCart } from '../../redux/cart/cartSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 
 export default function ProductCart({ name, price, images, id, types, detailPrice, checked }) {
+
   const dispatch = useDispatch();
   const handleRemoveProduct = e => {
     e.preventDefault()
@@ -22,7 +22,7 @@ export default function ProductCart({ name, price, images, id, types, detailPric
     // }
   }
   return (
-    <MDBCard className="mb-3">
+    <MDBCard className="mt-3">
       <MDBCardBody>
         <div className="d-flex justify-content-between">
           <div className="d-flex flex-row align-items-center" style={{ flex: '1' }}>
@@ -67,6 +67,7 @@ export default function ProductCart({ name, price, images, id, types, detailPric
             </button>
           </div>
         </div>
+
       </MDBCardBody>
     </MDBCard>
   )

@@ -8,6 +8,7 @@ import Landing from "../components/landing/Landing";
 import ProductList from "../components/products/ProductList";
 import ProductDetail from "../components/products/detail/ProductDetail";
 import Admin from "../components/admin";
+import { VerifyPayment } from '../components/verify/Verify-Payment';
 export const RouteElement = [
   {
     rootPath: '/',
@@ -24,6 +25,10 @@ export const RouteElement = [
   {
     rootPath: '/products/:productId',
     element: ProductDetail
+  },
+  {
+    rootPath: '/verify-payment',
+    element: VerifyPayment
   },
   {
     rootPath: '/admin',
