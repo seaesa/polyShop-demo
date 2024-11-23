@@ -23,8 +23,6 @@ export default function Landing() {
       <div className="d-flex flex-column bg-white py-4">
         <p className="text-center px-5">
           gói cước trả trước được thiết kế phù hợp với người không có nhu cầu nhắn tin nhiều và gọi khoảng từ 30 tới 135 phút/tháng. Ngoài chất lượng cuộc gọi hoàn hảo, bạn sẽ hoàn toàn kiểm soát chi phí kết nối phát sinh.
-
-
         </p>
         <div className="d-flex justify-content-center">
           <Link to="/products" className="btn btn-primary" replace>

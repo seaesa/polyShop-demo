@@ -70,11 +70,14 @@ export const cartSlice = createSlice({
       sessionStorage.setItem('cart', JSON.stringify(state.cart))
     },
     historyBuyed(state, action) {
-      state.buyed.push(...action.payload);
+      state.buyed.push(action.payload);
       localStorage.setItem('buyed', JSON.stringify(state.buyed));
+    },
+    setHistory(state, action) {
+      Object.assign(state.buyed, action.payload)
     }
   }
 })
-export const { addCart, removeCart, updateCart, updateTotalCart, decrementQuantity, increaseQuantity, historyBuyed } = cartSlice.actions;
+export const { addCart, removeCart, setHistory, updateCart, updateTotalCart, decrementQuantity, increaseQuantity, historyBuyed } = cartSlice.actions;
 export const selectCart = (state) => state.cart
 export default cartSlice.reducer 

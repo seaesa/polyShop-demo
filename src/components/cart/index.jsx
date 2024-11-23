@@ -6,9 +6,7 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCol, MDBContainer, MDBIc
 import { useState } from "react";
 import NoCart from './nocart';
 import { Loading } from '../admin/components/loading/loading'
-import toast, { Toaster } from 'react-hot-toast';
-import { vnpay } from '../../config/vnpay'
-import { ProductCode, VnpLocale } from 'vnpay';
+import toast from 'react-hot-toast';
 import PaymentModal from './paymentModal';
 
 export const Cart = () => {
@@ -22,66 +20,58 @@ export const Cart = () => {
     else {
       setModal(true)
     }
-    // if (phone && email && totalCart) {
-    //   setIsLoading(true)
-    //   // dispatch(historyBuyed(itemCheck));
-    //   setTimeout(() => {
-    //     setIsLoading(false)
-    //     notify()
-    //   }, 2000);
-    // } else alert('write your phone and email or not choice product');
   }
   return (
     <>
-      {cart.length > 0 ? <section className="h-100 h-custom mt-4 pt-4" style={{ backgroundColor: "#eee" }}>
-        <MDBContainer className="py-5 h-100">
-          <MDBRow className="justify-content-center align-items-center h-100">
-            <MDBCol>
-              <MDBCard>
-                <MDBCardBody className="p-4">
-                  <MDBRow className='align-items-end'>
-                    <MDBCol lg="7">
-                      <MDBTypography tag="h5">
-                        <Link to="/products" className="text-body">
-                          <MDBIcon fas icon="long-arrow-alt-left me-2" /> Continue
-                          shopping
-                        </Link>
-                      </MDBTypography>
-                      <hr />
-                      {cart.length > 0 && cart.map((product, index) => {
-                        return <ProductCart key={index} {...product} email={email} phone={phone} />
-                      })}
-                    </MDBCol>
-                    <MDBCol>
-                      <div className="d-flex justify-content-between">
-                        <p className="mb-2">Số Tiền</p>
-                        <p className="mb-2">{totalCart}k</p>
-                      </div>
-
-                      <MDBBtn
-                        onClick={handleBuyProduct}
-                        color="info" block size="lg">
-                        <div
-                          className="d-flex justify-content-between">
-                          <span>{totalCart}k</span>
-                          <span>
-                            Thanh toán
-                            <i className="fas fa-long-arrow-alt-right ms-2"></i>
-                          </span>
+      {cart.length > 0 ?
+        <section className="h-100 h-custom mt-4 pt-4" style={{ backgroundColor: "#eee" }}>
+          <MDBContainer className="py-5 h-100">
+            <MDBRow className="justify-content-center align-items-center h-100">
+              <MDBCol>
+                <MDBCard>
+                  <MDBCardBody className="p-4">
+                    <MDBRow className='align-items-end gap-4'>
+                      <MDBCol lg="7">
+                        <MDBTypography tag="h5">
+                          <Link to="/products" className="text-body">
+                            <MDBIcon fas icon="long-arrow-alt-left me-2" /> Continue
+                            shopping
+                          </Link>
+                        </MDBTypography>
+                        <hr />
+                        {cart.length > 0 && cart.map((product, index) => {
+                          return <ProductCart key={index} {...product} email={email} phone={phone} />
+                        })}
+                      </MDBCol>
+                      <MDBCol>
+                        <div className="d-flex justify-content-between">
+                          <p className="mb-2">Số Tiền</p>
+                          <p className="mb-2">{totalCart}k</p>
                         </div>
-                      </MDBBtn>
-                    </MDBCol>
-                  </MDBRow>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-        </MDBContainer>
-      </section>
+
+                        <MDBBtn
+                          onClick={handleBuyProduct}
+                          color="info" block size="lg">
+                          <div
+                            className="d-flex justify-content-between">
+                            <span>{totalCart}k</span>
+                            <span>
+                              Thanh toán
+                              <i className="fas fa-long-arrow-alt-right ms-2"></i>
+                            </span>
+                          </div>
+                        </MDBBtn>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+          </MDBContainer>
+        </section>
         : <NoCart />
       }
       {isLoading && <Loading />}
-      <Toaster />
       {modal && <PaymentModal amount={totalCart} modal={modal} setModal={setModal} />}
     </>
   )

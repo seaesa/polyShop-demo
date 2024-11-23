@@ -1,104 +1,121 @@
 import {
   MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalTitle,
-  MDBModalBody,
-  MDBModalFooter,
-  MDBValidation,
-  MDBValidationItem,
+  MDBCol,
+  MDBContainer,
   MDBInput,
-  MDBTextArea,
-} from 'mdb-react-ui-kit';
-import { vnpay } from '../../config/vnpay';
+  MDBModal,
+  MDBModalBody,
+  MDBModalContent,
+  MDBModalDialog,
+  MDBModalFooter,
+  MDBRow,
+  MDBTypography,
+} from "mdb-react-ui-kit";
+import React, { useEffect, useState } from "react";
+import { vnpay } from '../../config/vnpay'
+import { getIpAddress, genarateId } from '../../utils/utils'
 import { ProductCode, VnpLocale } from 'vnpay';
-import { genarateId, getIpAddress } from '../../utils/utils';
-import * as yup from 'yup'
-import { Formik } from 'formik';
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { setHistory } from '../../redux/cart/cartSlice';
 export default function PaymentModal({ modal, setModal, amount }) {
-  const toggleOpen = () => setModal(!modal);
+  const [message, setMessage] = useState('')
+  const dispatch = useDispatch()
   const handlePayment = (data) => {
     const paymentUrl = vnpay.buildPaymentUrl({
       vnp_Amount: amount,
       vnp_IpAddr: getIpAddress(),
       vnp_TxnRef: genarateId(10),
-      vnp_OrderInfo: data.payment_infomation,
+      vnp_OrderInfo: data?.payment_infomation || ' ',
       vnp_OrderType: ProductCode.CardCode,
       vnp_ReturnUrl: vnpay.urlReturn,
       vnp_Locale: VnpLocale.VN,
     });
     window.open(paymentUrl)
   }
-  const schema = yup.object().shape({
-    email: yup.string().email().required().default('hairipi100@gmail.com'),
-    phone: yup.number().required().default('0779526424'),
-    payment_infomation: yup.string().default(' ')
-  })
+  useEffect(() => {
+    const listenrEvent = (event) => {
+      if (event.key === 'buyed') {
+        console.log(event)
+        toast.success('Thanh Toán Thành Công')
+        setModal(false)
+        dispatch(setHistory(JSON.parse(event.newValue)))
+      }
+    }
+    window.addEventListener('storage', listenrEvent)
+    return () => window.removeEventListener('storage', listenrEvent)
+  }, [])
   return (
     <>
-      <MDBModal open={modal} onClose={() => setModal(false)} tabIndex='-1'>
-        <MDBModalDialog size='lg'>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle>Thanh Toán Số Tiền {amount}k</MDBModalTitle>
-              <MDBBtn className='btn-close' color='none' onClick={toggleOpen}></MDBBtn>
-            </MDBModalHeader>
+      <section className="vh-100" style={{ backgroundColor: "#35558a" }}>
+        <MDBContainer className="py-5 h-100">
+          <MDBRow className="justify-content-center align-items-center h-100 text-center">
+            <MDBCol>
+              <MDBModal open={modal} onClose={() => setModal(false)} tabIndex="-1">
+                <MDBModalDialog>
+                  <MDBModalContent>
+                    <MDBModalBody className="text-start text-black p-4">
+                      <MDBTypography
+                        tag="h4"
+                        className="mb-5"
+                        style={{ color: "#35558a" }}
+                      >
+                        Cảm ơn bạn đã đặt hàng
+                      </MDBTypography>
+                      <p className="mb-0" style={{ color: "#35558a" }}>
+                        Chi tiết thanh toán
+                      </p>
+                      <hr
+                        className="mt-2 mb-4"
+                        style={{
+                          height: "0",
+                          backgroundColor: "transparent",
+                          opacity: ".75",
+                          borderTop: "2px dashed #9e9e9e",
+                        }}
+                      />
 
-            <Formik
-              validationSchema={schema}
-              onSubmit={handlePayment}
-              initialValues={schema.getDefault()}
-            >
-              {({ handleSubmit, handleChange, values, errors, isValid, }) => {
-                return (
-                  <>
-                    <MDBValidation className='row g-3' onSubmit={handleSubmit}>
-                      <MDBModalBody>
-                        <MDBValidationItem className='mb-3' feedback={errors.email} invalid>
-                          <MDBInput
-                            required
-                            value={values.email}
-                            name='email'
-                            onChange={handleChange}
-                            label='Email'
-                          />
-                        </MDBValidationItem>
-                        <MDBValidationItem className='mb-3' feedback={errors.phone} invalid>
-                          <MDBInput
-                            required
-                            value={values.phone}
-                            name='phone'
-                            onChange={handleChange}
-                            label='Số Điện Thoại'
-                          />
-                        </MDBValidationItem>
-                        <MDBValidationItem className='mb-3' feedback={errors.payment_infomation} invalid>
-                          <MDBTextArea
-                            required
-                            value={values.payment_infomation}
-                            name='payment_infomation'
-                            onChange={handleChange}
-                            label='Nội Dung Chuyển Khoản'
-                          />
-                        </MDBValidationItem>
-                      </MDBModalBody>
+                      <div className="d-flex justify-content-between">
+                        <p className="fw-bold mb-0">Ether Chair(Qty:1)</p>
+                        <p className="text-muted mb-0">{amount}k</p>
+                      </div>
 
-                      <MDBModalFooter>
-                        <MDBBtn color='secondary' onClick={toggleOpen}>
-                          Close
-                        </MDBBtn>
-                        <MDBBtn type='submit'>Thanh Toán</MDBBtn>
-                      </MDBModalFooter>
-                    </MDBValidation>
-                  </>
-                )
-              }}
-            </Formik>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+                      <div className="d-flex justify-content-between">
+                        <p className="small mb-0">phí ship</p>
+                        <p className="small mb-0">$0</p>
+                      </div>
+
+                      <div className="d-flex justify-content-between pb-1">
+                        <p className="small">Thuế</p>
+                        <p className="small">$0</p>
+                      </div>
+
+                      <div className="d-flex justify-content-between">
+                        <p className="fw-bold">Tổng</p>
+                        <p className="fw-bold" style={{ color: "#35558a" }}>
+                          {amount}k
+                        </p>
+                      </div>
+                      <MDBInput value={message} onChange={e => setMessage(e.target.value)} label='nhập lời nhắn gửi' />
+                    </MDBModalBody>
+
+                    <MDBModalFooter className="d-flex justify-content-center border-top-0 py-4">
+                      <MDBBtn
+                        size="lg"
+                        style={{ backgroundColor: "#35558a" }}
+                        className="mb-1"
+                        onClick={handlePayment}
+                      >
+                        Thanh Toán
+                      </MDBBtn>
+                    </MDBModalFooter>
+                  </MDBModalContent>
+                </MDBModalDialog>
+              </MDBModal>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
+      </section>
     </>
   );
 }

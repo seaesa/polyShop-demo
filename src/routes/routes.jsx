@@ -9,6 +9,7 @@ import ProductList from "../components/products/ProductList";
 import ProductDetail from "../components/products/detail/ProductDetail";
 import Admin from "../components/admin";
 import { VerifyPayment } from '../components/verify/Verify-Payment';
+import { HistoryOrder } from '../components/history/History-Order';
 export const RouteElement = [
   {
     rootPath: '/',
@@ -28,7 +29,11 @@ export const RouteElement = [
   },
   {
     rootPath: '/verify-payment',
-    element: VerifyPayment
+    element: VerifyPayment,
+  },
+  {
+    rootPath: '/history',
+    element: HistoryOrder,
   },
   {
     rootPath: '/admin',
